@@ -86,7 +86,8 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        $tags = Tag::all();
+        return view('admin.events.edit', compact('event', 'tags'));
     }
 
     /**
@@ -98,7 +99,13 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, Event $event)
     {
-        //
+        $data = $request->all();
+
+        $dati_validati = $this->validation($data);
+
+        $event->update($dati_validati);
+
+        return redirect()->route('admin.events.show', $event->id);
     }
 
     /**

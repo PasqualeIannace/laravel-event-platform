@@ -13,7 +13,7 @@ class UpdateEventRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class UpdateEventRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "name" => ["required", "min:5", "max:50"],
+            "location" => ["required", "min:5", "max:300"],
+            "image" => ["required", "min:5", "max:300"],
+            "date" => ["required", "min:5", "max:10"],
+            "tickets" => ["required", "min:1", "max:5"]
         ];
     }
 }
