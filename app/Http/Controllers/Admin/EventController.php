@@ -1,18 +1,34 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Tag;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function validation($data)
+    {
+
+        $validated = Validator::make(
+            $data,
+            [
+                // "user_id" => "",
+                "name" => "required|min:5|max:50",
+                "location" => "required|min:5|max:300",
+                "image" => "required|min:5|max:300",
+                "date" => "required|min:5|max:10",
+                "tickets" => "required|min:5|max:10",
+            ]
+        )->validate();
+
+        return $validated;
+    }
+
     public function index()
     {
         $events = Event::all();
@@ -26,7 +42,8 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        $tags = Tag::all();
+        return view('admin.events.create', compact('tags'));
     }
 
     /**
@@ -37,7 +54,17 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        //
+        $validati = $request->validated();
+
+        $newEvent = new Event();
+        $newEvent->fill($validati);
+        $newEvent->save();
+
+        if ($request->tags) {
+            $newEvent->tags()->attach($request->tags);
+        }
+
+        return redirect()->route("admin.events.index");
     }
 
     /**
