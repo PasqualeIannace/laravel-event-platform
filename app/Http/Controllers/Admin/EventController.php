@@ -106,6 +106,10 @@ class EventController extends Controller
 
         $event->update($dati_validati);
 
+        if ($request->filled("tags")) {
+            $data["tags"] = array_filter($data["tags"]) ? $data["tags"] : [];  //Livecoding con Luca
+            $event->tags()->sync($data["tags"]);
+        }
         return redirect()->route('admin.events.show', $event->id);
     }
 

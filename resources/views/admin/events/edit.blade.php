@@ -61,12 +61,11 @@
 
             <div>
                 <h5>Sponsor</h5>
+                <input class="form-check-input" type="checkbox" name="tags[]" id="tags" value="">Nessuno
                 @foreach ($tags as $tag)
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="tags[]" id="{{ $tag->id }}"
-                        value="{{ $tag->id }}">
-                    <label class="form-check-label" for="{{ $tag->id }}">{{ $tag->sponsor
-                        }}</label>
+                    <input class="form-check-input" type="checkbox" name="tags[]" id="tags" value="{{ $tag->id }}">
+                    <label class="form-check-label" for="{{ $tag->id }}">{{ $tag->sponsor}}</label>
                 </div>
                 @endforeach
             </div>
