@@ -19,8 +19,8 @@ class EventController extends Controller
 
     public function show($id)
     {
-        $event = Event::find($id);
-        // $event = Event::with("user")->find($id);
+        // $event = Event::find($id);
+        $event = Event::with("user")->find($id);
 
         return response()->json([
             "success" => $event ? true : false,
